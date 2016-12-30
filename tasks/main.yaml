@@ -1,0 +1,66 @@
+---
+
+- name: Install package
+  package:
+    name: "{{ dracut_pkg }}"
+    state: present
+  tags:
+    - dracut_pkg
+
+- name: Install modules
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ dracut_modules }}"
+  tags:
+    - dracut_pkg
+
+- name: Create the main config file
+  template:
+    src: dracut.conf.j2
+    dest: "{{ dracut_config_file }}"
+  notify: Create new initramfs with Dracut
+  tags:
+    - dracut_config
+
+- name: Create the conf.d config files
+  template:
+    src: dracut.conf.d.j2
+    dest: "{{ dracut_config_dir }}/{{ item.key }}.conf"
+  when: item.value != None
+  with_dict: "{{ dracut_confd }}"
+  notify: Create new initramfs with Dracut
+  tags:
+    - dracut_config
+
+- name: Delete files set as null
+  file:
+    path: "{{ dracut_config_dir }}/{{ item.key }}.conf"
+    state: absent
+  when: >
+    item.value == None
+  with_dict: "{{ dracut_confd }}"
+  notify: Create new initramfs with Dracut
+  tags:
+    - dracut_config
+
+- name: Get all conf.d files
+  shell: ls -1 {{ dracut_config_dir }}/*.conf
+  register: dracut_confd_files
+  when: dracut_confd_manage
+  changed_when: false
+  tags:
+    - dracut_config
+    - dracut_confd_manage
+
+- name: Delete unmanaged files
+  file:
+    path: "{{ item }}"
+    state: absent
+  when: >
+    dracut_confd_manage and
+    item | basename | regex_replace('.conf$', '') not in dracut_confd
+  with_items: "{{ dracut_confd_files.stdout_lines if 'stdout_lines' in dracut_confd_files else {} }}"
+  tags:
+    - dracut_config
+    - dracut_confd_manage

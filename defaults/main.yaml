@@ -1,0 +1,31 @@
+---
+
+# Main Dracut package (explicit version can be specified here)
+dracut_pkg: dracut
+
+# List of Dracut modules to be installed
+dracut_modules: []
+
+# Path to the Dracut config
+dracut_config_file: /etc/dracut.conf
+
+# Path to the Dracut conf.d directory
+dracut_config_dir: /etc/dracut.conf.d
+
+# Wheter to manage files in the conf.d directory
+# (all files not defined in the dracut_confd variable will be deleted)
+dracut_confd_manage: no
+
+# Dracut config
+# (check the README file for more info)
+dracut_config: {}
+
+# Dracut conf.d configs
+# (check the README file for more info)
+dracut_confd: {}
+
+# Automatically build a new initramfs if configuration changed
+dracut_initramfs_build: no
+
+# Command used to build the new initramfs
+dracut_initramfs_cmd: dracut -f -v
