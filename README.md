@@ -30,7 +30,7 @@ Examples
     dracut_config:
       # Add more drivers
       # (note the mandatory "+" sign indicating that the value is a list)
-      drivers+: >-
+      add_drivers+: >-
         hv_netvsc
         hv_storvsc
         hv_vmbus
@@ -50,14 +50,14 @@ Examples
       # This is the name of the conf file in the conf.d directory
       hyperv_drivers:
         # This is the actual configuration inside the file
-        drivers+: >-
+        add_drivers+: >-
           hv_netvsc
           hv_storvsc
           hv_vmbus
       # This is the name of another file
       virtio_drivers:
         # This is again the actual configuration inside the file
-        drivers+: >-
+        add_drivers+: >-
           virtio
           virtio_blk
           virtio_net
