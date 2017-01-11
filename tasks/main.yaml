@@ -3,14 +3,12 @@
 - name: Install package
   package:
     name: "{{ dracut_pkg }}"
-    state: present
   tags:
     - dracut_pkg
 
 - name: Install modules
   package:
     name: "{{ item }}"
-    state: present
   with_items: "{{ dracut_modules }}"
   tags:
     - dracut_pkg
