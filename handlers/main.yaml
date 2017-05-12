@@ -2,4 +2,4 @@
 
 - name: Create new initramfs with Dracut
   shell: "{{ dracut_initramfs_cmd }}"
-  when: dracut_initramfs_build
+  when: dracut_initramfs_build == true

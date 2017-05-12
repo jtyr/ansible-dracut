@@ -45,7 +45,7 @@
 - name: Get all conf.d files
   shell: ls -1 {{ dracut_config_dir }}/*.conf
   register: dracut_confd_files
-  when: dracut_confd_manage
+  when: dracut_confd_manage == true
   changed_when: false
   tags:
     - dracut_config
