@@ -15,7 +15,7 @@ Please report any issues or send PR.
 Examples
 --------
 
-```
+```yaml
 ---
 
 - name: Default usage with no extra modules configured
@@ -75,7 +75,7 @@ Role variables
 
 Variables used by the role:
 
-```
+```yaml
 # Main Dracut package (explicit version can be specified here)
 dracut_pkg: dracut
 
